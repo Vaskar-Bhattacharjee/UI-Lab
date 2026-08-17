@@ -1,9 +1,10 @@
 'use client'
-import { IconChevronDownFilled, IconLayersLinked, IconLinkFilled, IconLoader2, IconPointer, IconSend, IconSettings } from "@tabler/icons-react";
+import { IconChevronDownFilled, IconLinkFilled, IconLoader2, IconPointer, IconSend, IconSettings } from "@tabler/icons-react";
 import Image from "next/image";
-import { AnimatePresence, LegacyAnimationControls, motion, useAnimationControls, useInView } from "motion/react";
+import { AnimatePresence, LegacyAnimationControls, motion, useAnimationControls } from "motion/react";
 import { cn } from "../lib/utils";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { NextjsICon, Skills } from "../illustration/illustration";
 
 const MovingImages = [
   {
@@ -110,7 +111,7 @@ const BentoCard = ({
 
 const CardSkeleton = ({ aichatbox, skeletonItem, className, parentClass }: { aichatbox?: React.ReactNode, skeletonItem?: React.ReactNode, className?: string, parentClass?: string }) => {
   return (
-    <div className={cn("relative h-90 py-8 overflow-visible flex items-start justify-center", parentClass)}>
+    <div className={cn("relative h-92 py-8 overflow-visible flex items-start justify-center", parentClass)}>
       <div className={cn("w-80 h-60 bg-neutral-900 rounded-xl  pb-8", className)}>
         {skeletonItem}
       </div>
@@ -411,21 +412,21 @@ useEffect(() => {
         src="/mountains-2.webp"
         alt="mountains-2"
         fill
-        className="w-full h-full object-cover opacity-40 mask-b-from-80%"
+        className="w-full h-full object-cover opacity-45 mask-b-from-80%"
         draggable={false}
       />
     </motion.div>
 
-      <div className="flex shrink-0 items-center justify-between px-4 py-2">
+      <div className="flex shrink-0 items-center justify-between px-10 pt-4">
         <div className="h-2.5 w-14 rounded-sm bg-neutral-800/60 z-10" />
         <span className="rounded-md px-1.5 py-0.5 text-[7px] font-medium tracking-wide uppercase bg-neutral-800/20 text-white ring-1 ring-white/35 backdrop-blur-sm">Example output</span>
       </div>
       <div className="mt-8 max-w-[18rem] px-10 space-y-2">
         <h3 className="text-[13px] font-semibold font-inter leading-tight tracking-tight text-white z-10">Escape to the peaks</h3>
-        <p className="text-[10px] font-inter text-white max-w-[18rem] z-10">Plan your next alpine trip with guides, trails, and stays in one place.</p>
+        <p className="text-[10px] font-inter text-white/90 max-w-[18rem] z-10">Plan your next alpine trip with guides, trails, and stays in one place.</p>
         <div className="flex gap-1.5 pt-1">
           <span className={`inline-flex h-5 items-center rounded-xl px-2 text-[8px] font-medium ${backgroundVisible ? 'bg-neutral-800 text-white' : 'bg-blue-500 text-white'} cursor-pointer z-10`}>Book a trip</span>
-          <span className="inline-flex h-5 items-center rounded-xl border px-2 text-[8px] font-medium border-black/50 bg-white/10 text-white backdrop-blur-sm cursor-pointer z-10">View trails</span>
+          <span className="inline-flex h-5 items-center rounded-xl border px-2 text-[8px] font-medium border-black/50 bg-white/10 text-white/90 backdrop-blur-sm cursor-pointer z-10">View trails</span>
         </div>
       </div>
       <motion.div
@@ -610,26 +611,30 @@ const ChatInput2 = () => {
 
       <div className="rounded-xl bg-neutral-800 px-2 py-2 text-xs leading-6 text-neutral-200">
 
-        {/* Added a simple motion wrapper for the icon so it pops in first */}
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.2, delay: 1.5 }}
+          transition={{
+            duration: 0.2,
+            delay: 1.5,
+          }}
+          className="inline-block align-middle mr-1"
         >
-          <IconLayersLinked className="inline-block size-4 mr-1  align-middle text-neutral-400" />
+          <Skills className="size-4 text-neutral-400" />
         </motion.span>
 
-        {/* Converted your exact span to a motion.span so the badge pops in second */}
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.2, delay: 1.6 }}
+          transition={{
+            duration: 0.2,
+            delay: 1.6,
+          }}
           className="inline-flex items-center rounded-md border border-neutral-500/70 bg-neutral-900 px-1.5 py-0.5 text-xs text-neutral-300 align-middle"
         >
           /impeccable
         </motion.span>
 
-        {/* Kept your exact span wrapper, but mapped the text to stagger it word by word */}
         <span className="ml-1 text-xs text-neutral-400">
           {"style design this better, make it minimal".split(" ").map((word, index) => (
             <motion.span
@@ -638,7 +643,7 @@ const ChatInput2 = () => {
               whileInView={{ opacity: 1 }}
               transition={{
                 duration: 0.2,
-                delay: 1.7 + index * 0.08, // Staggers each word by 0.08s
+                delay: 1.7 + index * 0.08,
               }}
             >
               {word}{" "}
@@ -651,8 +656,3 @@ const ChatInput2 = () => {
   );
 };
 
-const NextjsICon = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="text-white size-2.5 shrink-0 text-white"><path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z" fill="currentColor"></path></svg>
-  )
-}
