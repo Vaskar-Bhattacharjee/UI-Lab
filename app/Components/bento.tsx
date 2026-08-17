@@ -3,7 +3,7 @@ import { IconChevronDownFilled, IconLinkFilled, IconLoader2, IconPointer, IconSe
 import Image from "next/image";
 import { AnimatePresence, LegacyAnimationControls, motion, useAnimationControls } from "motion/react";
 import { cn } from "../lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { NextjsICon, Skills } from "../illustration/illustration";
 
 const MovingImages = [
@@ -125,8 +125,8 @@ const SkeletonItem1st = () => {
   return (
     <div className="w-full h-60 flex flex-col items-start justify-start">
       {/* Browser Header */}
-      <div className="w-full h-8 flex items-start justify-between gap-4 rounded-2xl px-5 z-10 bg-neutral-900">
-        <div className="size-10 rounded-lg flex items-start justify-center gap-1 mt-2.5">
+      <div className="w-full h-7 flex items-start justify-between gap-4 rounded-t-2xl px-5 z-10 bg-neutral-800">
+        <div className="size-10 rounded-lg flex items-start justify-center gap-1 mt-2 ">
           <div className="size-2 bg-red-500/70 rounded-full"></div>
           <div className="size-2 bg-yellow-500/70 rounded-full"></div>
           <div className="size-2 bg-green-500/70 rounded-full"></div>
@@ -164,18 +164,42 @@ const SkeletonItem1st = () => {
 }
 
 const SkeletonItem2nd = () => {
+  const row1Ref = useRef(null);
+  const row2Ref = useRef(null);
+  const [row1Width, setRow1Width] = useState(0);
+  const [row2Width, setRow2Width] = useState(0);
+
+useLayoutEffect(() => {
+  const getDuplicateOffset = (
+    ref: React.RefObject<HTMLDivElement | null>,
+    setter: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    if (ref.current && MovingImages.length > 0) {
+      const firstDuplicate = ref.current.children[MovingImages.length];
+      if (firstDuplicate instanceof HTMLElement) {
+        setter(firstDuplicate.offsetLeft);
+      }
+    }
+  };
+
+  getDuplicateOffset(row1Ref, setRow1Width);
+  getDuplicateOffset(row2Ref, setRow2Width);
+}, []);
+
   const duplicatedImages = [...MovingImages, ...MovingImages];
 
   return (
-    <div className="w-full max-w-full overflow-hidden flex flex-col items-center justify-between gap-5 
-     mask-l-from-80% mask-r-from-80% mask-t-from-90% mask-b-from-80%">
-
+    <div
+      className="w-full max-w-full overflow-hidden flex flex-col items-center justify-between gap-5 
+      mask-l-from-80% mask-r-from-80% mask-t-from-90% mask-b-from-80%"
+    >
       <motion.div
-        className="flex w-max gap-4"
-        animate={{ x: ["0%", "-50%"] }}
+        ref={row1Ref}
+        className="flex w-max gap-3"
+        animate={row1Width ? { x: [0, -row1Width] } : { x: 0 }}
         transition={{
           ease: "linear",
-          duration: 40,
+          duration: 35,
           repeat: Infinity,
         }}
       >
@@ -195,11 +219,12 @@ const SkeletonItem2nd = () => {
       </motion.div>
 
       <motion.div
-        className="flex w-max gap-4"
-        animate={{ x: ["0%", "50%"] }}
+        ref={row2Ref}
+        className="flex w-max gap-3"
+        animate={row2Width ? { x: [-row2Width, 0] } : { x: 0 }}
         transition={{
           ease: "linear",
-          duration: 40,
+          duration: 35,
           repeat: Infinity,
         }}
       >
@@ -217,6 +242,7 @@ const SkeletonItem2nd = () => {
           </div>
         ))}
       </motion.div>
+
       <ChatInput text="Card" className="top-30" />
     </div>
   );
@@ -232,7 +258,7 @@ const SkeletonItem3rd = ({ className }: { className?: string }) => {
           y: [50, 0, 0, 0, 0],
           scale: [1, 1, 0.75, 1, 1],
         }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.6 }}
         transition={{
           delay: 0.5,
           duration: 3.5,
@@ -259,16 +285,16 @@ const SkeletonItem3rd = ({ className }: { className?: string }) => {
           Skills that push back on generic output
         </h2>
 
-        <p className="mx-auto mt-1 max-w-[11rem] text-[8px] leading-snug text-neutral-400">
+        <p className="mx-auto mt-1 max-w-44 text-[8px] leading-snug text-neutral-400">
           Point at a section, run a skill, get sharper layout and copy.
         </p>
 
         <div className="mt-2.5 flex justify-center gap-1.5">
-          <span className="inline-flex h-4 items-center rounded-[4px] bg-neutral-700 px-2 text-[7px] font-medium text-white">
+          <span className="inline-flex h-4 items-center rounded-smbg-neutral-700 px-2 text-[7px] font-medium text-white">
             Get Started
           </span>
 
-          <span className="inline-flex h-4 items-center rounded-[4px] border border-white/15 bg-neutral-800 px-2 text-[7px] font-medium text-neutral-300">
+          <span className="inline-flex h-4 items-center rounded-sm border border-white/15 bg-neutral-800 px-2 text-[7px] font-medium text-neutral-300">
             Learn More
           </span>
         </div>
@@ -278,9 +304,9 @@ const SkeletonItem3rd = ({ className }: { className?: string }) => {
         <div className="mx-auto h-2 w-20 rounded-sm bg-neutral-600/80" />
 
         <div className="grid grid-cols-3 gap-2">
-          <div className="aspect-[4/3] rounded-lg bg-neutral-800" />
-          <div className="aspect-[4/3] rounded-lg bg-neutral-800" />
-          <div className="aspect-[4/3] rounded-lg bg-neutral-800" />
+          <div className="aspect-4/3 rounded-lg bg-neutral-800" />
+          <div className="aspect-4/3 rounded-lg bg-neutral-800" />
+          <div className="aspect-4/3 rounded-lg bg-neutral-800" />
         </div>
       </div>
 
@@ -365,57 +391,63 @@ const pressButton = async (controls: LegacyAnimationControls) => {
   await controls.start({ scale: 1, transition: { duration: 0.15, ease: "easeInOut" } });
 };
 const SkeletonItem4th = () => {
-const [stage, setStage] = useState<CreateStage>("placeholder");
-const [backgroundVisible, setBackgroundVisible] = useState(false);
-const buttonControls = useAnimationControls();
-const words = CREATE_PROMPT.split(" ");
+  const [stage, setStage] = useState<CreateStage>("placeholder");
+  const [backgroundVisible, setBackgroundVisible] = useState(false);
+  const [hasEnteredView, setHasEnteredView] = useState(false);
+  const buttonControls = useAnimationControls();
+  const words = CREATE_PROMPT.split(" ");
 
-useEffect(() => {
-  if (stage !== "placeholder") return;
-  const t = setTimeout(() => setStage("prompt"), CREATE_TIMINGS.toPrompt);
-  return () => clearTimeout(t);
-}, [stage]);
+  useEffect(() => {
+    if (stage !== "placeholder" || !hasEnteredView) return;
+    const t = setTimeout(() => setStage("prompt"), CREATE_TIMINGS.toPrompt);
+    return () => clearTimeout(t);
+  }, [stage, hasEnteredView]);
 
-useEffect(() => {
-  if (stage !== "prompt") return;
-  const t = setTimeout(async () => {
-    await pressButton(buttonControls);
-    setStage("loading");
-  }, CREATE_TIMINGS.toGenerate);
-  return () => clearTimeout(t);
-}, [stage]);
+  useEffect(() => {
+    if (stage !== "prompt") return;
+    const t = setTimeout(async () => {
+      await pressButton(buttonControls);
+      setStage("loading");
+    }, CREATE_TIMINGS.toGenerate);
+    return () => clearTimeout(t);
+  }, [stage, buttonControls]);
 
-useEffect(() => {
-  if (stage !== "loading") return;
-  const t = setTimeout(() => setStage("result"), CREATE_TIMINGS.loading);
-  return () => clearTimeout(t);
-}, [stage]);
+  useEffect(() => {
+    if (stage !== "loading") return;
+    const t = setTimeout(() => setStage("result"), CREATE_TIMINGS.loading);
+    return () => clearTimeout(t);
+  }, [stage]);
 
-useEffect(() => {
-  if (stage !== "result") return;
-  const t = setTimeout(async () => {
-    setBackgroundVisible(true);
-    await pressButton(buttonControls);
-    setStage("exiting");
-  }, CREATE_TIMINGS.toExit);
-  return () => clearTimeout(t);
-}, [stage]);
+  useEffect(() => {
+    if (stage !== "result") return;
+    const t = setTimeout(async () => {
+      setBackgroundVisible(true);
+      await pressButton(buttonControls);
+      setStage("exiting");
+    }, CREATE_TIMINGS.toExit);
+    return () => clearTimeout(t);
+  }, [stage, buttonControls]);
+
   return (
-    <div className="relative w-full py-0 h-full bg-linear-to-b from-black to-transparent">
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: backgroundVisible ? 1 : 0, opacity: backgroundVisible ? 1 : 0 }}
-      transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
-      className="absolute inset-0"
+      onViewportEnter={() => setHasEnteredView(true)}
+      viewport={{ once: true, amount: 0.6 }}
+      className="relative w-full py-0 h-full bg-linear-to-b from-black to-transparent"
     >
-      <Image
-        src="/mountains-2.webp"
-        alt="mountains-2"
-        fill
-        className="w-full h-full object-cover opacity-45 mask-b-from-80%"
-        draggable={false}
-      />
-    </motion.div>
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: backgroundVisible ? 1 : 0, opacity: backgroundVisible ? 1 : 0 }}
+        transition={{ delay: 0.7, duration: 0.6, ease: "easeOut" }}
+        className="absolute inset-0"
+      >
+        <Image
+          src="/mountains-2.webp"
+          alt="mountains-2"
+          fill
+          className="w-full h-full object-cover opacity-45 mask-b-from-80%"
+          draggable={false}
+        />
+      </motion.div>
 
       <div className="flex shrink-0 items-center justify-between px-10 pt-4">
         <div className="h-2.5 w-14 rounded-sm bg-neutral-800/60 z-10" />
@@ -430,100 +462,100 @@ useEffect(() => {
         </div>
       </div>
       <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="mt-4 grid grid-cols-3 gap-3">
-        <div className="aspect-[4/3] rounded-lg bg-white/2 ring-1 ring-white/3"></div>
-        <div className="aspect-[4/3] rounded-lg bg-white/2 ring-1 ring-white/3"></div>
-        <div className="aspect-[4/3] rounded-lg bg-white/2 ring-1 ring-white/3"></div>
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hasEnteredView ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+        className="mt-4 grid grid-cols-3 gap-3">
+        <div className="aspect-4/3 rounded-lg bg-white/2 ring-1 ring-white/3"></div>
+        <div className="aspect-4/3 rounded-lg bg-white/2 ring-1 ring-white/3"></div>
+        <div className="aspect-4/3 rounded-lg bg-white/2 ring-1 ring-white/3"></div>
       </motion.div>
 
-<AnimatePresence>
-  {stage !== "exiting" && (
-    <motion.div
-      exit={{ scale: 0, opacity: 0 }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="absolute left-1/2 -translate-x-1/2 bottom-8 w-60 h-50 rounded-2xl bg-neutral-800 overflow-hidden flex flex-col items-center justify-center gap-2 z-10"
-    >
-      <div className="relative text-white text-xs font-medium w-55 mx-auto h-25 bg-gray-800 rounded-xl px-2 py-1 overflow-hidden">
-        <AnimatePresence mode="wait">
-          {stage === "placeholder" && (
-            <motion.span key="placeholder" exit={{ opacity: 0 }}>
-              Describe the image...
-            </motion.span>
-          )}
-
-          {stage === "prompt" && (
-            <motion.div
-              key="prompt"
-              variants={wordContainer}
-              initial="hidden"
-              animate="visible"
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="flex flex-wrap gap-x-1"
-            >
-              {words.map((word, i) => (
-                <motion.span key={i} variants={wordItem}>
-                  {word}
-                </motion.span>
-              ))}
-            </motion.div>
-          )}
-
-          {stage === "loading" && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center justify-center gap-1.5 w-full h-full"
-            >
-              <IconLoader2 size={12} className="animate-spin" />
-              <span>Generating…</span>
-            </motion.div>
-          )}
-
-          {stage === "result" && (
-            <motion.div
-              key="image"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.45, delay: 0.2 }}
-              className="absolute inset-0"
-            >
-              <Image src="/mountains-2.webp" alt="chat-image" fill className="object-cover" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <button className="text-white text-xs font-medium w-55 mx-auto h-8 bg-black rounded-xl px-2 py-1 flex items-center justify-between">
-        Flux <span className="text-xs"><IconChevronDownFilled /></span>
-      </button>
-
-      <motion.button
-        animate={buttonControls}
-        className="text-white text-xs font-medium w-55 mx-auto h-8 bg-blue-500/80 rounded-xl px-2 py-1"
-      >
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={stage === "result" ? "use-this" : "create"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+      <AnimatePresence>
+        {stage !== "exiting" && (
+          <motion.div
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute left-1/2 -translate-x-1/2 bottom-8 w-60 h-50 rounded-2xl bg-neutral-800 overflow-hidden flex flex-col items-center justify-center gap-2 z-10"
           >
-            {stage === "result" ? "Use this" : "Create"}
-          </motion.span>
-        </AnimatePresence>
-      </motion.button>
+            <div className="relative text-white text-xs font-medium w-55 mx-auto h-25 bg-gray-800 rounded-xl px-2 py-1 overflow-hidden">
+              <AnimatePresence mode="wait">
+                {stage === "placeholder" && (
+                  <motion.span key="placeholder" exit={{ opacity: 0 }}>
+                    Describe the image...
+                  </motion.span>
+                )}
+
+                {stage === "prompt" && (
+                  <motion.div
+                    key="prompt"
+                    variants={wordContainer}
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ scale: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="flex flex-wrap gap-x-1"
+                  >
+                    {words.map((word, i) => (
+                      <motion.span key={i} variants={wordItem}>
+                        {word}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                )}
+
+                {stage === "loading" && (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center justify-center gap-1.5 w-full h-full"
+                  >
+                    <IconLoader2 size={12} className="animate-spin" />
+                    <span>Generating…</span>
+                  </motion.div>
+                )}
+
+                {stage === "result" && (
+                  <motion.div
+                    key="image"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.45, delay: 0.2 }}
+                    className="absolute inset-0"
+                  >
+                    <Image src="/mountains-2.webp" alt="chat-image" fill className="object-cover" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button className="text-white text-xs font-medium w-55 mx-auto h-8 bg-black rounded-xl px-2 py-1 flex items-center justify-between">
+              Flux <span className="text-xs"><IconChevronDownFilled /></span>
+            </button>
+
+            <motion.button
+              animate={buttonControls}
+              className="text-white text-xs font-medium w-55 mx-auto h-8 bg-blue-500/80 rounded-xl px-2 py-1"
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={stage === "result" ? "use-this" : "create"}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {stage === "result" ? "Use this" : "Create"}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
-  )}
-</AnimatePresence>
-    </div>
   );
 }
 
