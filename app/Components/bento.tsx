@@ -125,7 +125,7 @@ const SkeletonItem1st = () => {
   return (
     <div className="w-full h-60 flex flex-col items-start justify-start">
       {/* Browser Header */}
-      <div className="w-full h-7 flex items-start justify-between gap-4 rounded-t-2xl px-5 z-10 bg-neutral-800">
+      <div className="w-full h-7 flex items-start justify-between gap-4 rounded-t-2xl px-5 z-10 bg-neutral-950/40">
         <div className="size-10 rounded-lg flex items-start justify-center gap-1 mt-2 ">
           <div className="size-2 bg-red-500/70 rounded-full"></div>
           <div className="size-2 bg-yellow-500/70 rounded-full"></div>
@@ -635,7 +635,7 @@ const ChatInput2 = () => {
         delay: 1.4,
         ease: "easeOut",
       }}
-      className="absolute top-45 left-78 -translate-x-1/2 w-80 rounded-xl bg-black px-2 pt-1 pb-2"
+      className="absolute top-45 left-78 -translate-x-1/2 w-80 rounded-xl bg-black px-2 pt-1 pb-2 pointer-events-none"
     >
       <p className="text-xs font-semibold text-white mb-2">
         Skills
