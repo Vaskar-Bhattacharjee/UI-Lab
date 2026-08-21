@@ -1,42 +1,110 @@
+export const MilestoneDiamond = ({ color = "#5B5C5A" }: { color?: string }) => (
+  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" className="shrink-0">
+    <path
+      d="M7.3406 2.32C7.68741 1.89333 8.31259 1.89333 8.6594 2.32L12.7903 7.402C13.0699 7.74597 13.0699 8.25403 12.7903 8.598L8.6594 13.68C8.31259 14.1067 7.68741 14.1067 7.3406 13.68L3.2097 8.598C2.9301 8.25403 2.9301 7.74597 3.2097 7.402L7.3406 2.32Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
-export const Skills = ({ className }: { className?: string }) => {
-  return (
+interface ElectricProps {
+  className?: string;
+  color?: string;
+  bgColor?: string; 
+}
+
+export const Electric = ({
+  className = "",
+  color = "currentColor",
+  bgColor = "currentColor",
+}: ElectricProps) => (
+  <div className={className}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      width="14"
+      height="14"
       fill="none"
-      aria-hidden="true"
+      viewBox="0 0 14 14"
       className={className}
     >
-      <path
-        d="M6.4 9H4.6C3.716 9 3 9.716 3 10.6v8.8c0 .884.716 1.6 1.6 1.6h1.8c.884 0 1.6-.716 1.6-1.6v-8.8C8 9.716 7.284 9 6.4 9Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      <path
-        d="M11.4 3H9.6C8.716 3 8 3.716 8 4.6v14.8c0 .884.716 1.6 1.6 1.6h1.8c.884 0 1.6-.716 1.6-1.6V4.6C13 3.716 12.284 3 11.4 3Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      <path
-        d="m17.005 6.376-1.71.566c-.83.275-1.174.39-1.28.703-.106.314.01.658.285 1.488l3.59 10.847c.275.83.39 1.174.704 1.28.313.106.657-.01 1.487-.285l1.71-.566c.83-.275 1.174-.39 1.28-.703.106-.314-.01-.658-.285-1.488L19.196 7.371c-.275-.83-.39-1.174-.704-1.28-.313-.106-.657.01-1.487.285Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <g clipPath="url(#clip0_2237_10003)">
+        <rect
+          width="14"
+          height="14"
+          x="14"
+          y="14"
+          fill={bgColor}
+          opacity="0.2"
+          rx="7"
+          transform="rotate(180 14 14)"
+        />
+        <path
+          fill={color}
+          fillRule="evenodd"
+          d="M5.578 10.648a.66.66 0 0 1-.558-.186L2.999 8.441a.656.656 0 0 1 .928-.928l1.4 1.4L7.94 4.126a.656.656 0 0 1 1.04-.15L11 5.997a.656.656 0 0 1-.928.928l-1.4-1.401-2.612 4.788a.66.66 0 0 1-.482.336"
+          clipRule="evenodd"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_2237_10003">
+          <path fill="#fff" d="M14 0H0v14h14z" />
+        </clipPath>
+      </defs>
     </svg>
-  );
-};
+  </div>
+);
 
-export const NextjsICon = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="text-white size-2.5 shrink-0 text-white"><path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z" fill="currentColor"></path></svg>
-  )
-}
+export const CurvedLine = ({className}:{className?: string}) =>(
+    <div className={className}>
+    <svg 
+        xmlns="http://www.w3.org/2000/svg"
+        width="153" 
+        height="109" 
+        fill="none" 
+        viewBox="0 0 153 109" 
+    >
+        <path stroke="url(#paint0_linear_2237_10241)" d="M153 .5a84.21 84.21 0 0 0-70.032 37.443L55.754 78.691A67.05 67.05 0 0 1 0 108.5"></path>
+        <defs>
+            <linearGradient id="paint0_linear_2237_10241" x1="0" x2="153" y1="54.5" y2="54.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#fff" stop-opacity="0.1"></stop>
+                <stop offset="1" stop-color="#fff" stop-opacity="0.3"></stop>
+            </linearGradient>
+        </defs>
+    </svg>
+    </div>
+)
+
+export const CurvedLine2 = ({className}:{className?: string}) =>(
+    <div className={className}>
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="88" 
+        height="111" 
+        fill="none" 
+        viewBox="0 0 88 111" 
+        className="_9Zs8oG_connectorTwo"
+    >
+        <path 
+            stroke="url(#paint0_linear_2237_10465)" 
+            d="M88 110.5a37.445 37.445 0 0 1-35.036-24.231L27.893 19.79A29.81 29.81 0 0 0 0 .5">
+        </path>
+        <defs>
+            <linearGradient 
+                id="paint0_linear_2237_10465" 
+                x1="0" 
+                x2="88" 
+                y1="55.5" 
+                y2="55.5" 
+                gradientUnits="userSpaceOnUse"
+            >
+                <stop stop-color="#fff" stop-opacity="0.1"></stop>
+                <stop offset="1" stop-color="#fff" stop-opacity="0.3"></stop>
+            </linearGradient>
+        </defs>
+    </svg>
+
+    </div>
+)
+
