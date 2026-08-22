@@ -9,16 +9,11 @@ import {
   IconMessageFilled,
 } from "@tabler/icons-react";
 import { Bot, Landmark, MapPinCheck, MessageSquareText, PencilRuler } from "lucide-react";
+import { AnimatePresence, delay, motion } from "motion/react";
 import { CurvedLine, CurvedLine2, Electric } from "../../illustration/illustration";
 import { TimelineItem } from "../timline-bar/timeline";
 
-
-
-
-
-
-// --- Main Container ---
-const columns = [
+const calendarColumns = [
   { cellHeight: "h-2", month: "FEB", digit: [2, 9, 16, 23] },
   { cellHeight: "h-2", month: "MAR", digit: [2, 9, 16, 23] },
   { cellHeight: "h-2", month: "APR", digit: [30, 6, 13, 20] },
@@ -30,14 +25,24 @@ const columns = [
 ];
 
 export const Linear = () => {
-  const [clicked, setClicked] = React.useState<string>("initiative");
+  const [activeTimeline, setActiveTimeline] = React.useState<TimelineView>("initiative");
   return (
-    <div className="relative h-[560px] w-full">
-      <Box setClicked={setClicked} />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+    <div className="relative h-[590px] w-full overflow-hidden">
+      <Box setActiveTimeline={setActiveTimeline} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent"
+      />
 
-      <div className="relative w-full max-w-9xl mx-auto px-10 border border-white/20 h-full mt-2 mask-r-from-70% mask-l-from-70% mask-b-from-50% bg-[#101112] grid grid-cols-8 overflow-hidden">
-        {columns.map((col, i) => (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="relative w-[1300px] left-1/2 -translate-x-[55%] md:-translate-x-1/2 shrink-0 px-10 border border-white/20 h-full mt-2 mask-r-from-70% mask-l-from-70% mask-b-from-50% bg-[#101112] grid grid-cols-8 overflow-hidden"
+      >
+        {calendarColumns.map((col, i) => (
           <div
             key={i}
             className="col-span-1 h-full grid grid-cols-4 divide-x divide-white/10 border-r border-white/10 border-dashed"
@@ -59,11 +64,11 @@ export const Linear = () => {
 
         <div className="absolute inset-0 pointer-events-none">
 
-          {
-            clicked === "initiative" && (
-              <>
+          <AnimatePresence initial={false} mode="wait">
+            {activeTimeline === "initiative" && (
+              <TimelineScene key="initiative">
                 <TimelineItem
-                  id="ui-refresh"
+                  key={`${activeTimeline}-ui-refresh`}
                   title="UI Refresh"
                   color="#9d3533b2"
                   bgcolor="#251515a5"
@@ -75,7 +80,6 @@ export const Linear = () => {
                   milestoneStart={80}
                   icon1={<PencilRuler className="text-teal-500 size-4" />}
                   icon2={<Electric className="text-yellow-500 size-4" />}
-                  clicked={clicked}
                   milestones={[
                     { label: "Core screens", color: "#5B5C5A", bgcolor: "#1E1717" },
                     { label: "Polish", color: "#E3484E", bgcolor: "#9d3533b2" },
@@ -83,13 +87,13 @@ export const Linear = () => {
                 />
 
                 <TimelineItem
-                  id="split-fares"
+                  key={`${activeTimeline}-split-fares`}
                   title="Split fares"
-                  color="#008D2C"
+                  color="#00738d"
                   bgcolor="#0d2a11b5"
                   top={210}
-                  left={500}
-                  totalWidth={800}
+                  left={450}
+                  totalWidth={740}
                   solidWidth={500}
                   milestoneGap={280}
                   milestoneStart={160}
@@ -101,7 +105,7 @@ export const Linear = () => {
                   ]}
                 />
                 <TimelineItem
-                  id="Autonomy"
+                  key={`${activeTimeline}-autonomy`}
                   title="Autonomy status clarity"
                   color="#858a85"
                   bgcolor="transparent"
@@ -111,7 +115,7 @@ export const Linear = () => {
                   solidWidth={500}
                   milestoneGap={280}
                   milestoneStart={160}
-                  icon1={<Bot className="text-teal-500 size-4" />}
+                  icon1={<Bot className="text-blue-500 size-4" />}
                   icon2={<Electric className="text-green-500 rotate-90 size-4" />}
                   milestones={[
                     { label: "Alpha", color: "#5B5C5A", bgcolor: "#1E1717" },
@@ -120,7 +124,7 @@ export const Linear = () => {
                 />
 
                 <TimelineItem
-                  id="Random"
+                  key={`${activeTimeline}-random`}
                   title="Random title"
                   color="#858a85"
                   bgcolor="transparent"
@@ -138,25 +142,35 @@ export const Linear = () => {
                     { label: "GA", color: "#858a85", bgcolor: "#0d2a11b5" },
                   ]}
                 />
-                <CurvedLine className="absolute top-[370px] left-[708px] w-full h-full" />
-              </>
+                <motion.div
+                  variants={{
+                    initial: { x: "-40vw", opacity: 0 },
+                    animate: { x: 0, opacity: 1 },
+                    exit: { x: "-40vw", opacity: 0 },
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="pointer-events-none"
+                >
+                  <CurvedLine className="absolute top-[370px] left-[708px] w-full h-full" />
+                </motion.div>
+              </TimelineScene>
             )
-          }
-          {
-            clicked === "APAC" && (
-              <>
+            }
+            {activeTimeline === "APAC" && (
+              <TimelineScene key="APAC">
                 <TimelineItem
-                  id="japan"
+                  key={`${activeTimeline}-japan`}
                   title="Japan localization"
                   color="#858a85"
                   bgcolor="transparent"
                   top={130}
-                  left={500}
+                  left={450}
                   totalWidth={322}
                   solidWidth={500}
                   milestoneGap={90}
                   milestoneStart={170}
                   className="border-solid opacity-50"
+                  direction="right"
                   icon1={<MessageSquareText className="text-neutral-500 size-3" />}
                   icon2={<Electric className="text-green-500 rotate-90 size-4" />}
                   milestones={[
@@ -166,29 +180,31 @@ export const Linear = () => {
                   showExtension={false}
                 />
                 <TimelineItem
-                  id="tokyo"
+                  key={`${activeTimeline}-tokyo`}
                   title="Tokyo launch"
                   color="#858a85"
                   bgcolor="transparent"
                   top={242}
-                  left={908}
+                  left={860}
                   totalWidth={500}
                   solidWidth={500}
                   milestoneGap={90}
                   milestoneStart={300}
                   className="border-solid opacity-50"
+                  direction="right"
                   icon1={<MapPinCheck className="text-green-500 size-4" />}
                   icon2={<Electric className="text-green-500 rotate-90 size-4" />}
                   milestones={[
                     { label: "Beta", color: "#5B5C5A", bgcolor: "#1E1717" },
                   ]}
                   showExtension={false}
-                /> 
+                />
                 <TimelineItem
-                  id="korea"
+                  key={`${activeTimeline}-korea`}
                   title="Korea Compliance Readiness"
                   color="#b3382c"
                   bgcolor="#342020"
+                  direction="right"
                   top={335}
                   left={560}
                   totalWidth={700}
@@ -202,21 +218,69 @@ export const Linear = () => {
                     { label: "Submission", color: "#008D2C", bgcolor: "#0d2a11b5" },
                   ]}
                 />
-                <CurvedLine2 className="absolute top-[165px] left-[820px] " />
-              </>
+                <motion.div
+                  variants={{
+                    initial: { x: "40vw", opacity: 0 },
+                    animate: { x: 0, opacity: 1 },
+                    exit: { x: "40vw", opacity: 0 },
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="pointer-events-none"
+                >
+                  <CurvedLine2 className="absolute top-41.25 left-193" />
+                </motion.div>
+              </TimelineScene>
             )
-          }
+            }
+          </AnimatePresence>
 
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
 
-const Box = ({ setClicked }: { setClicked: (value: string) => void }) => {
+type TimelineView = "initiative" | "APAC";
+
+const timelineSceneVariants = {
+  initial: {},
+  animate: {},
+  exit: { opacity: 1, transition: { when: "afterChildren" as const } },
+};
+
+const TimelineScene = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    variants={timelineSceneVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    className="absolute inset-0"
+  >
+    {children}
+  </motion.div>
+);
+
+const Box = ({
+  setActiveTimeline,
+}: {
+  setActiveTimeline: (value: TimelineView) => void;
+}) => {
   return (
-    <div
-      className="absolute flex flex-col w-100 h-124 left-15 top-22 z-30 border border-px border-white/10 rounded-xl overflow-hidden"
+    <motion.div
+      initial={{
+        opacity: 0,
+        filter: "blur(10px)",
+      }}
+      animate={{
+        opacity: 1,
+        filter: "blur(0px)",
+      }}
+      transition={{
+        delay: 0.6,
+        duration: 0.3,
+        ease: "easeInOut",
+      }}
+      className="absolute hidden md:flex flex-col w-100 h-124 left-15 top-22 z-30 border border-px border-white/10 rounded-xl overflow-hidden "
       style={{
         background: "linear-gradient(#ffffff05 0% 100%), #0f1011",
         boxShadow: "0 4px 32px #08090a99",
@@ -227,19 +291,19 @@ const Box = ({ setClicked }: { setClicked: (value: string) => void }) => {
       <div className="relative flex items-center justify-between border-b border-white/5 px-4 py-6 overflow-hidden">
         <span className="ml-3 text-sm text-[#d0d6e0]">Initiatives</span>
       </div>
-      <InitiativesBox setClicked={setClicked} />
-      <APAC_BOX setClicked={setClicked} />
-    </div>
+      <InitiativesBox setActiveTimeline={setActiveTimeline} />
+      <ApacNavigationSection setActiveTimeline={setActiveTimeline} />
+    </motion.div>
   );
 };
 
-type Initiative = {
+type NavigationItem = {
   label: string;
   count: number;
   icon: React.ReactNode;
 };
 
-const SecondaryItems: Initiative[] = [
+const initiativeNavigationItems: NavigationItem[] = [
   {
     label: "Infra stability",
     count: 28,
@@ -262,13 +326,17 @@ const SecondaryItems: Initiative[] = [
   },
 ];
 
-const InitiativesBox = ({ setClicked }: { setClicked: (value: string) => void }) => {
+const InitiativesBox = ({
+  setActiveTimeline,
+}: {
+  setActiveTimeline: (value: TimelineView) => void;
+}) => {
   return (
     <div className="relative flex flex-col gap-8 border-b border-white/[0.08] px-[22px] pt-[22px] pb-[26px]">
       <span className="absolute left-[38px] top-15 h-37 w-px bg-[#23252a]" />
 
       <button
-        onClick={() => setClicked("initiative")}
+        onClick={() => setActiveTimeline("initiative")}
         className="relative z-10 flex w-full items-center gap-2 text-left hover:bg-neutral-700/15 rounded-sm px-2 py-2 cursor-pointer">
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#0F3338]">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="#02B8CC">
@@ -280,7 +348,7 @@ const InitiativesBox = ({ setClicked }: { setClicked: (value: string) => void })
         <span className="ml-auto text-[12px] text-[#8a8f98]">99</span>
       </button>
 
-      {SecondaryItems.map((item) => (
+      {initiativeNavigationItems.map((item) => (
         <div key={item.label} className="flex items-center gap-2">
           <div className="flex ml-4 items-center justify-center rounded-md">
             <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
@@ -300,7 +368,7 @@ const InitiativesBox = ({ setClicked }: { setClicked: (value: string) => void })
   );
 };
 
-const SecondaryItems2: Initiative[] = [
+const apacNavigationItems: NavigationItem[] = [
   {
     label: "Japan Launch",
     count: 12,
@@ -317,13 +385,17 @@ const SecondaryItems2: Initiative[] = [
   },
 ];
 
-const APAC_BOX = ({ setClicked }: { setClicked: (value: string) => void }) => {
+const ApacNavigationSection = ({
+  setActiveTimeline,
+}: {
+  setActiveTimeline: (value: TimelineView) => void;
+}) => {
   return (
     <div className="relative flex flex-col gap-8 px-[22px] pt-[22px] pb-[26px]">
       <span className="absolute bottom-8 left-[35px] top-15 w-px bg-[#23252a] h-23" />
 
       <button
-        onClick={() => setClicked("APAC")}
+        onClick={() => setActiveTimeline("APAC")}
         className="flex items-center gap-2 text-left z-10 hover:bg-neutral-800/20 rounded-sm px-2 py-2 cursor-pointer">
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#482929]">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="#EC5C5D">
@@ -335,7 +407,7 @@ const APAC_BOX = ({ setClicked }: { setClicked: (value: string) => void }) => {
         <span className="ml-auto text-[12px] text-[#8a8f98]">21</span>
       </button>
 
-      {SecondaryItems2.map((item) => (
+      {apacNavigationItems.map((item) => (
         <div key={item.label} className="flex items-center gap-2">
           <div className="flex ml-3.5 items-center justify-center rounded-md">
             <svg width="9" height="9" viewBox="0 0 9 9" fill="none">

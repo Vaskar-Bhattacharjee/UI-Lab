@@ -1,9 +1,10 @@
 import { MilestoneDiamond } from "@/app/illustration/illustration";
 import { cn } from "@/app/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
+
+type TimelineDirection = "left" | "right";
 
 type TimelineItemProps = {
-  id: string;
   title: string;
   color: string;
   bgcolor: string;
@@ -18,11 +19,10 @@ type TimelineItemProps = {
   milestoneGap?: number;
   className?: string;
   showExtension?: boolean;
-  clicked?: string;
+  direction?: TimelineDirection;
 };
 
 export const TimelineItem = ({
-  id,
   title,
   color,
   bgcolor,
@@ -37,28 +37,29 @@ export const TimelineItem = ({
   milestoneGap = 32,
   className,
   showExtension = true,
-  clicked,
+  direction = "left",
 }: TimelineItemProps) => {
+  const offset = direction === "right" ? "40vw" : "-40vw";
+  const variants = {
+    initial: { x: offset, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: offset, opacity: 0 },
+  };
+
   return (
-    <AnimatePresence>
     <motion.div
-      initial={{ x: -50 }}
-      animate={{ clickx: 0 }}
-      exit={{ x: -50 }}
-      transition={{ duration: 0.5 }}
-      className="absolute z-20 flex flex-col gap-1.5 pointer-events-auto font-sans"
+      variants={variants}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="absolute z-20 flex flex-col gap-1.5 pointer-events-auto"
       style={{ top: `${top}px`, left: `${left}px`, width: `${totalWidth}px` }}
     >
-      {/* Title Bar */}
       <div className="flex items-center gap-1.5 text-xs font-medium text-[#f7f8f8]">
         {icon1}
-        <span>{title}</span>
+        <span className="text-neutral-100/80">{title}</span>
         {icon2}
       </div>
 
-      {/* Track Bar */}
       <div className="relative flex h-6 w-full items-center">
-        {/* Solid Bar Section */}
         <div
           className={`relative flex h-full items-center border border-[0.5px] border-white/10 bg-[#141516]/30 rounded-l-md ${showExtension === false ? "border rounded-r-md" : 'border-r-0'}`}
           style={{ width: `${solidWidth}px` }}
@@ -73,13 +74,12 @@ export const TimelineItem = ({
             {milestones.map((m, idx) => (
               <div key={idx} className="relative flex flex-col items-center justify-center text-[#8a8f98]">
                 <MilestoneDiamond color={m.color} />
-                <span className="absolute top-5 whitespace-nowrap text-[11px]">{m.label}</span>
+                <span className="absolute top-5 whitespace-nowrap text-[11px] text-neutral-100/50">{m.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Faded Dashed Extension Section */}
         {showExtension && (
         <div
           className="relative h-full flex-1 rounded-r-md"
@@ -100,6 +100,5 @@ export const TimelineItem = ({
         )}
     </div>
     </motion.div>
-    </AnimatePresence>
   );
 };

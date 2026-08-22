@@ -68,8 +68,8 @@ export const CurvedLine = ({className}:{className?: string}) =>(
         <path stroke="url(#paint0_linear_2237_10241)" d="M153 .5a84.21 84.21 0 0 0-70.032 37.443L55.754 78.691A67.05 67.05 0 0 1 0 108.5"></path>
         <defs>
             <linearGradient id="paint0_linear_2237_10241" x1="0" x2="153" y1="54.5" y2="54.5" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#fff" stop-opacity="0.1"></stop>
-                <stop offset="1" stop-color="#fff" stop-opacity="0.3"></stop>
+                <stop stopColor="#fff" stopOpacity="0.1"></stop>
+                <stop offset="1" stopColor="#fff" stopOpacity="0.3"></stop>
             </linearGradient>
         </defs>
     </svg>
@@ -99,8 +99,8 @@ export const CurvedLine2 = ({className}:{className?: string}) =>(
                 y2="55.5" 
                 gradientUnits="userSpaceOnUse"
             >
-                <stop stop-color="#fff" stop-opacity="0.1"></stop>
-                <stop offset="1" stop-color="#fff" stop-opacity="0.3"></stop>
+                <stop stopColor="#fff" stopOpacity="0.1"></stop>
+                <stop offset="1" stopColor="#fff" stopOpacity="0.3"></stop>
             </linearGradient>
         </defs>
     </svg>
