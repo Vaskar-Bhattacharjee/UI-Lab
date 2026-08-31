@@ -1,11 +1,11 @@
 
 "use client";
-import { Linear } from "./Components/linear/linear";
+import { Card } from "./Components/ui/card";
 
 export default function Home() {
   return (
     <div className="h-full min-h-screen w-screen flex items-center justify-center bg-black">
-      <Linear />
+      <Card />
     </div>
   );
 }
