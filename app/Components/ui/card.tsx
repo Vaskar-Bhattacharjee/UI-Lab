@@ -73,7 +73,7 @@ export const Card = ({ className }: CardProps) => {
                             backgroundPosition: "center",
                         }}
                     >
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/15 to-black/70 -z-10" />
+                        <div className="absolute inset-0 bg-linear-to-b from-black/5 via-black/15 to-black/70 -z-10" />
                         <CardSkelton className="pointer-events-none" />
                         <CardHeader title={card.title} />
                         <CardDescription description={card.description} />
@@ -93,7 +93,7 @@ const CardSkelton = ({ className }: { className?: string }) => {
 
 const CardHeader = ({ className, title }: { className?: string; title: string }) => {
     return (
-        <h2 className={cn(" mt-0 md:mt-4 px-1 text-sm md:text-xl font-semibold text-neutral-50/80 px-3 z-10", className)}>{title}</h2>
+        <h2 className={cn(" mt-0 md:mt-4 px-3 text-sm md:text-xl font-semibold text-neutral-50/80 px-3 z-10", className)}>{title}</h2>
     )
 }
 
