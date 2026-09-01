@@ -15,7 +15,7 @@ const CARD_INFO = [
         backgroundImage: "https://images.unsplash.com/photo-1580405624815-5168a9f8bb63?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         title: "Between the Peaks",
         description:
-            "An atmospheric interaction built around depth and soft transitions through mountain fog."
+            "An atmospheric interaction built around depth and soft transitions through mountain."
     },
     {
         backgroundImage: "https://images.unsplash.com/photo-1554629947-334ff61d85dc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91bnRhaW4lMjB2aWV3fGVufDB8fDB8fHww",
@@ -63,7 +63,7 @@ export const Card = ({ className }: CardProps) => {
                             damping: 22,
                         }}
                         className={cn(
-                            "absolute h-[330px] w-[230px] md:h-[440px] md:w-[340px] cursor-pointer flex-col justify-start border border-neutral-800 bg-neutral-900 p-0 shadow-xl transition-colors duration-200 rounded-xl overflow-hidden group",
+                            "absolute h-[315px] w-[220px] md:h-[440px] md:w-[340px] cursor-pointer flex-col justify-start border border-neutral-800 bg-neutral-900 p-0 shadow-xl transition-colors duration-200 rounded-xl overflow-hidden group",
                             isActive ? "border-neutral-600 shadow-2xl shadow-indigo-500/10 cursor-grabbing" : "bg-neutral-900 cursor-pointer",
                             className
                         )}
@@ -86,7 +86,7 @@ export const Card = ({ className }: CardProps) => {
 }
 const CardSkelton = ({ className }: { className?: string }) => {
     return (
-        <div className={cn("h-60 md:h-70 w-full rounded-xl p-0 relative mask-b-from-70% mask-t-from-70% mask-l-from-70% mask-r-from-70%", className)}>
+        <div className={cn("h-56 md:h-70 w-full rounded-xl p-0 relative mask-b-from-70% mask-t-from-70% mask-l-from-70% mask-r-from-70%", className)}>
         </div>
     )
 }
