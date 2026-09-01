@@ -63,7 +63,7 @@ export const Card = ({ className }: CardProps) => {
                             damping: 22,
                         }}
                         className={cn(
-                            "absolute h-[440px] w-[340px] cursor-pointer flex-col justify-start border border-neutral-800 bg-neutral-900 p-0 shadow-xl transition-colors duration-200 rounded-xl overflow-hidden group",
+                            "absolute h-[330px] w-[230px] md:h-[440px] md:w-[340px] cursor-pointer flex-col justify-start border border-neutral-800 bg-neutral-900 p-0 shadow-xl transition-colors duration-200 rounded-xl overflow-hidden group",
                             isActive ? "border-neutral-600 shadow-2xl shadow-indigo-500/10 cursor-grabbing" : "bg-neutral-900 cursor-pointer",
                             className
                         )}
@@ -86,20 +86,20 @@ export const Card = ({ className }: CardProps) => {
 }
 const CardSkelton = ({ className }: { className?: string }) => {
     return (
-        <div className={cn("h-70 w-full rounded-xl p-0 relative mask-b-from-70% mask-t-from-70% mask-l-from-70% mask-r-from-70%", className)}>
+        <div className={cn("h-60 md:h-70 w-full rounded-xl p-0 relative mask-b-from-70% mask-t-from-70% mask-l-from-70% mask-r-from-70%", className)}>
         </div>
     )
 }
 
 const CardHeader = ({ className, title }: { className?: string; title: string }) => {
     return (
-        <h2 className={cn("mt-4 px-1 text-xl font-semibold text-neutral-50/80 px-3 z-10", className)}>{title}</h2>
+        <h2 className={cn(" mt-0 md:mt-4 px-1 text-sm md:text-xl font-semibold text-neutral-50/80 px-3 z-10", className)}>{title}</h2>
     )
 }
 
 const CardDescription = ({ className, description }: { className?: string; description: string }) => {
     return (
-        <p className={cn("mt-2 px-4 text-[14px] font-inter text-neutral-300/50  z-10", className)}>{description}</p>
+        <p className={cn("mt-2 px-4 text-xs md:text-[14px] font-inter text-neutral-300/50  z-10", className)}>{description}</p>
     )
 }
 
