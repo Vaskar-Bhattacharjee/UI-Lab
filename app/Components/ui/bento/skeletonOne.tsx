@@ -28,9 +28,9 @@ export const CardSkeletonOne = () => {
   ];
 
   return (
-    <div className="bg-white relative overflow-hidden h-full w-full flex items-center justify-center">
+    <div className="bg-white relative h-full w-full flex items-center justify-center scale-[0.9] sm:scale-[0.9] md:scale-100">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none [mask-image:radial-gradient(circle_at_center,black_30%,transparent_85%)]">
-{rings.map((ringSize, index) => (
+        {rings.map((ringSize, index) => (
           <motion.div
             key={index}
             className={cn("absolute rounded-full border border-neutral-200/70", ringSize)}
@@ -62,7 +62,7 @@ export const CardSkeletonOne = () => {
           <div
             key={index}
             style={{ transform: `translate(${x}px, ${y}px)` }}
-            className={`absolute z-30 flex flex-col items-center justify-center gap-1.5 bg-white/95 backdrop-blur-sm border border-neutral-300/80 rounded-lg px-3 py-2 w-[60px] shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-neutral-400 cursor-pointer ${hoveredCard === index ? "border-neutral-300" : ""}`}
+            className={`absolute z-30 flex flex-col items-center justify-center gap-1.5 bg-white/95 backdrop-blur-sm border border-neutral-400/80 rounded-lg px-3 py-2 w-[60px] shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-300 hover:border-neutral-400 cursor-pointer ${hoveredCard === index ? "border-neutral-300" : ""}`}
             onMouseEnter={() => setHoveredCard(index)}
             onMouseLeave={() => setHoveredCard(null)}
           >

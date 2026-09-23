@@ -34,8 +34,8 @@ export const CardSkeletonFour = ({ className }: { className?: string }) => {
   }, [stage]);
 
   return (
-    <div className={cn("w-full h-full flex flex-col items-center justify-start pt-8 gap-4 mask-b-from-90%", className)}>      <BackgroundImage key="bg" />
-
+  <div className={cn("w-full h-full flex flex-col items-center justify-start pt-4 sm:pt-8 gap-4 mask-b-from-90%", className)}>
+      <BackgroundImage />
       <TextBox key={loopKey} text={variant.prompt} />
 
       <AnimatePresence>
@@ -161,8 +161,7 @@ const TextBox = ({ text }: { text: string }) => {
         duration: 0.1,
         ease: "easeOut",
       }}
-      className="self-stretch mx-8 h-fit p-4 bg-neutral-100 border border-neutral-200 rounded-lg z-10"
-    >
+      className="self-stretch mx-4 sm:mx-8 h-fit p-4 bg-neutral-100 border border-neutral-200 rounded-lg z-10"    >
       <p className="text-neutral-900/70 font-inter text-[15px] font-medium pointer-events-none py-3">
         {text}
       </p>
@@ -207,7 +206,7 @@ const PlannedApproach = ({ rows }: { rows: string[] }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full px-8 mt-1"
+      className="w-full px-4 sm:px-8 mt-1"
     >
       <div className="w-full rounded-xl border border-neutral-300/80 bg-white/55 backdrop-blur-md overflow-hidden">
         {/* Header */}

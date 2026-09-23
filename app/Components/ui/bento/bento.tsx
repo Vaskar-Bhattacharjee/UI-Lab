@@ -7,9 +7,9 @@ import { CardSkeletonFour } from "./skeletonFour";
 
 export const Bento = () => {
     return (
-        <div className="flex items-center justify-center gap-4 h-[616px] w-screen max-w-[1250px] mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 h-full lg:h-[616px] w-screen max-w-[1250px] mx-auto px-2 py-4 lg:py-0 lg:px-0">
             
-            <div className="w-[528px] h-full">
+            <div className="w-full lg:w-[528px] h-full">
             <BentoCard className="bg-white border border-neutral-300 w-full h-full p-8 relative overflow-hidden">
                 <CardSkeleton height="h-120" > 
                     <CardSkeletonOne />
@@ -19,7 +19,7 @@ export const Bento = () => {
             </BentoCard>
             </div>
 
-           <div className="flex flex-col gap-4 w-[428px] h-full">
+           <div className="flex flex-col gap-4 w-full lg:w-[428px] h-full">
             <BentoCard className="bg-white border border-neutral-300 relative overflow-hidden">
                 <CardSkeleton height="h-52 w-full flex items-center justify-center mask-t-from-80% mask-b-from-80%" >
                     <CardSkeletonTwo className="text-neutral-400/60 -mt-8" />
@@ -37,7 +37,7 @@ export const Bento = () => {
             </BentoCard>
             </div>
 
-            <div className="w-[500px] h-full">
+            <div className="w-full lg:w-[500px] h-full">
             <BentoCard className="bg-white border border-neutral-300  relative overflow-hidden">
                 <CardSkeleton height="h-117" >
                     <CardSkeletonFour />
